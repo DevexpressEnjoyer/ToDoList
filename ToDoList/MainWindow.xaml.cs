@@ -7,6 +7,8 @@ namespace ToDoList
     {
         public List<Item> DatabaseItems { get; private set; }
         private bool notificationSent = false;
+        private bool dateBoundriesApplied = false;
+        private bool includeCompletedTasks = true;
         public MainWindow()
         {
             InitializeComponent();
@@ -15,10 +17,16 @@ namespace ToDoList
 
         public void Read()
         {
+            if (dateBoundriesApplied)
+            {
+                ReadWithDateBoundries();
+                return;
+            }
+
             var context = new DataContext();
 
             DatabaseItems = context.Items.ToList();
-            ItemList.ItemsSource = DatabaseItems.OrderBy(i =>
+            ItemList.ItemsSource = DatabaseItems.Where(i => includeCompletedTasks || (!includeCompletedTasks && !i.IsCompleted)).OrderBy(i =>
                 i.Priority == "High" ? 1 :
                 i.Priority == "Medium" ? 2 : 3
             );
@@ -26,6 +34,54 @@ namespace ToDoList
             if (!notificationSent)
             {
                 CheckAndNotify(DatabaseItems);
+            }
+        }
+
+        public void ReadWithDateBoundries()
+        {
+            var context = new DataContext();
+
+            DatabaseItems = context.Items.ToList();
+
+            if (!String.IsNullOrEmpty(DateFrom.Text) && !String.IsNullOrEmpty(DateTo.Text))
+            {
+                ItemList.ItemsSource = DatabaseItems.Where(i => 
+                    DateTime.Parse(i.Date) >= DateTime.Parse(DateFrom.Text) && 
+                    DateTime.Parse(i.Date) <= DateTime.Parse(DateTo.Text) && 
+                    (includeCompletedTasks || (!includeCompletedTasks && !i.IsCompleted))
+                ).OrderBy(i =>
+                    i.Priority == "High" ? 1 :
+                    i.Priority == "Medium" ? 2 : 3
+                );
+            }
+            else if (!String.IsNullOrEmpty(DateFrom.Text))
+            {
+                ItemList.ItemsSource = DatabaseItems.Where(i => 
+                    DateTime.Parse(i.Date) >= DateTime.Parse(DateFrom.Text) &&
+                    (includeCompletedTasks || (!includeCompletedTasks && !i.IsCompleted))
+                ).OrderBy(i =>
+                    i.Priority == "High" ? 1 :
+                    i.Priority == "Medium" ? 2 : 3
+                );
+            }
+            else if (!String.IsNullOrEmpty(DateTo.Text))
+            {
+                ItemList.ItemsSource = DatabaseItems.Where(i => 
+                    DateTime.Parse(i.Date) <= DateTime.Parse(DateTo.Text) &&
+                    (includeCompletedTasks || (!includeCompletedTasks && !i.IsCompleted))
+                ).OrderBy(i =>
+                    i.Priority == "High" ? 1 :
+                    i.Priority == "Medium" ? 2 : 3
+                );
+            }
+            else
+            {
+                ItemList.ItemsSource = DatabaseItems.Where(i =>
+                    (includeCompletedTasks || (!includeCompletedTasks && !i.IsCompleted))
+                ).OrderBy(i =>
+                    i.Priority == "High" ? 1 :
+                    i.Priority == "Medium" ? 2 : 3
+                );
             }
         }
 
@@ -88,29 +144,13 @@ namespace ToDoList
 
         private void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
-            var context = new DataContext();
-
-            DatabaseItems = context.Items.ToList();
-
-            if(!String.IsNullOrEmpty(DateFrom.Text) && !String.IsNullOrEmpty(DateTo.Text))
-            {
-                ItemList.ItemsSource = DatabaseItems.Where(i => DateTime.Parse(i.Date) >= DateTime.Parse(DateFrom.Text) && DateTime.Parse(i.Date) <= DateTime.Parse(DateTo.Text));
-            }else if(!String.IsNullOrEmpty(DateFrom.Text))
-            {
-                ItemList.ItemsSource = DatabaseItems.Where(i => DateTime.Parse(i.Date) >= DateTime.Parse(DateFrom.Text));
-            }
-            else if(!String.IsNullOrEmpty(DateTo.Text))
-            {
-                ItemList.ItemsSource = DatabaseItems.Where(i => DateTime.Parse(i.Date) <= DateTime.Parse(DateTo.Text));
-            }
-            else
-            {
-                ItemList.ItemsSource = DatabaseItems;
-            }
+            dateBoundriesApplied = true;
+            Read();
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
+            dateBoundriesApplied = false;
             Read();
         }
 
@@ -133,19 +173,14 @@ namespace ToDoList
 
         private void CompletedTasks_Checked(object sender, RoutedEventArgs e)
         {
+            includeCompletedTasks = true;
             Read();
         }
 
         private void CompletedTasks_Unchecked(object sender, RoutedEventArgs e)
         {
-            var context = new DataContext();
-
-            DatabaseItems = context.Items.ToList();
-
-            ItemList.ItemsSource = DatabaseItems.Where(i => !i.IsCompleted).OrderBy(i =>
-                i.Priority == "High" ? 1 :
-                i.Priority == "Medium" ? 2 : 3
-            );
+            includeCompletedTasks = false;
+            Read();
         }
 
         private void CheckAndNotify(List<Item> items)
