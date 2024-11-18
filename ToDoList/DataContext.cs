@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace ToDoList
 {
@@ -11,7 +6,7 @@ namespace ToDoList
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source =..\..\ToDoList.db");
+            optionsBuilder.UseSqlite(@"Data Source =ToDoList.db");
         }
 
         public DbSet<Item> Items { get; set; }

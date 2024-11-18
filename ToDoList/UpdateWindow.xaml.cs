@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace ToDoList
 {
@@ -50,7 +38,7 @@ namespace ToDoList
             if (!String.IsNullOrEmpty(NameTextBox.Text) && !String.IsNullOrEmpty(DateTextBox.Text))
             {
                 Update();
-                ((MainWindow)System.Windows.Application.Current.MainWindow).Read();
+                ((MainWindow)Application.Current.MainWindow).Read();
                 this.Close();
             }
             else
