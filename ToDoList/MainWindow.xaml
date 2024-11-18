@@ -98,9 +98,10 @@
         </Button>
         <Button Content="Apply" HorizontalAlignment="Left" Margin="338,51,0,0" VerticalAlignment="Top" Click="ApplyButton_Click"/>
         <Button Content="Clear" HorizontalAlignment="Left" Margin="400,51,0,0" VerticalAlignment="Top" Click="ClearButton_Click"/>
-        <Button Content="Mark as Completed" HorizontalAlignment="Left" IsEnabled="{Binding ElementName=ItemList, Path=SelectedItems.Count}" Margin="660,336,0,0" VerticalAlignment="Top" Click="CompletedButton_Click"/>
+        <Button Content="Mark as Completed" HorizontalAlignment="Left" IsEnabled="{Binding ElementName=ItemList, Path=SelectedItems.Count}" Margin="547,336,0,0" VerticalAlignment="Top" Click="CompletedButton_Click" RenderTransformOrigin="0.826,0.463"/>
         <CheckBox Content="Show completed tasks" HorizontalAlignment="Left" Margin="462,54,0,0" VerticalAlignment="Top" IsChecked="true" Checked="CompletedTasks_Checked" Unchecked="CompletedTasks_Unchecked"/>
         <Label Content="My To Do List" HorizontalAlignment="Left" Margin="0,7,0,0" VerticalAlignment="Top" Height="36" Width="328" FontSize="20" FontWeight="Bold"/>
+        <Button Content="Delete all tasks" HorizontalAlignment="Left" Margin="691,336,0,0" VerticalAlignment="Top" Click="DeleteAllButton_Click"/>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="793*"/>

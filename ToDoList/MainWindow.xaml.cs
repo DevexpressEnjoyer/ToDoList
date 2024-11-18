@@ -194,5 +194,24 @@ namespace ToDoList
 
             this.notificationSent = true;
         }
+
+        private void DeleteAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("You are going to remove all tasks from the database. Do you want to continue?", "Confirm tasks deletion", MessageBoxButton.OKCancel);
+
+            if(result == MessageBoxResult.OK)
+            {
+                var context = new DataContext();
+
+                foreach (var item in context.Items)
+                {
+                    context.Remove(item);
+                }
+
+                context.SaveChanges();
+            }
+
+            Read();
+        }
     }
 }
