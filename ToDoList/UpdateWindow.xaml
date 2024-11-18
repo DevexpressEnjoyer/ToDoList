@@ -1,0 +1,26 @@
+﻿<Window x:Class="ToDoList.UpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToDoList"
+        mc:Ignorable="d"
+        Title="Edit Item" Height="253" Width="269"
+        WindowStartupLocation="CenterScreen">
+    <Grid x:Name="EditGrid" Margin="3,3,10,0" VerticalAlignment="Top" Height="230">
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="3,0,0,0"   VerticalAlignment="Top"/>
+        <Label Content="Description:" HorizontalAlignment="Left" Margin="3,40,0,0" VerticalAlignment="Top"/>
+        <Label Content="Date:" HorizontalAlignment="Left" Margin="3,79,0,0" VerticalAlignment="Top"/>
+        <Label Content="Priority:" HorizontalAlignment="Left" Margin="3,118,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.342,0.144"/>
+        <TextBox Name="NameTextBox"  HorizontalAlignment="Left"  Margin="75,0,0,0" Width="150" Height="26" VerticalAlignment="Top"/>
+        <TextBox Name="DescriptionTextBox"  HorizontalAlignment="Left" Margin="75,40,0,0" Width="150" Height="26" VerticalAlignment="Top"/>
+        <DatePicker Name="DateTextBox"  HorizontalAlignment="Left" Margin="75,79,0,0" Width="150" Height="26" VerticalAlignment="Top"/>
+        <ComboBox Height="23" Name="PriorityTextBox" Margin="75,118,71,89">
+            <ComboBoxItem Content="Low"/>
+            <ComboBoxItem Content="Medium"/>
+            <ComboBoxItem Content="High"/>
+        </ComboBox>
+        <Button Content="Update" Click="UpdateItemButton_Click" HorizontalAlignment="Left" Margin="64,176,0,0" VerticalAlignment="Top"/>
+        <Button Content="Cancel" Click="CancelUpdateButton_Click" HorizontalAlignment="Left" Margin="159,176,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
