@@ -15,11 +15,6 @@
         <Label Content="To:" HorizontalAlignment="Left" Margin="174,48,0,0" VerticalAlignment="Top"/>
         <DatePicker Name="DateTo" HorizontalAlignment="Left" Margin="213,49,0,0" VerticalAlignment="Top"/>
         <ListView Name="ItemList" Margin="5,0,3,0" Height="238" VerticalAlignment="Center">
-            <ListView.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Clear" Click="MenuItem_Click"/>
-                </ContextMenu>
-            </ListView.ContextMenu>
             <ListView.Resources>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Center" />

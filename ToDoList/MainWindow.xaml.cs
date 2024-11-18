@@ -137,11 +137,6 @@ namespace ToDoList
             Read();
         }
 
-        private void MenuItem_Click(object sender, EventArgs e)
-        {
-            ItemList.Items.Clear();
-        }
-
         private void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
             dateBoundriesApplied = true;
